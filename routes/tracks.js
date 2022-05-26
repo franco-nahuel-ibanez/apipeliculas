@@ -1,8 +1,9 @@
 const router = require('express').Router()
+const {getItems, createItem} = require('../controllers/tracks')
 
-router.get('/', (req, res) => {
-    res.send('Hola Mundo')
-})
+router.get('/', getItems)
+
+router.post('/', createItem)
 
 
 
