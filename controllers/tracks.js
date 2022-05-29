@@ -14,9 +14,13 @@ const getItems = async (req, res) => {
 
 const getItem = async (req, res) => {
     try {
-        
+        req = matchedData(req)
+        const {id} = req
+
+        const data = await TracksModel.findById(id)
+        res.send({data})
     } catch (error) {
-        
+        handleHttpError(res, "ERROR_GET_ITEM")
     }
 }
 
@@ -30,11 +34,32 @@ const createItem = async (req, res) => {
     }
 }
 
+const updateItem = async (req, res) => {
+    try {
+        const {id, ...body} = matchedData(req)
+        
+        const data = await TracksModel.findOneAndUpdate(
+            id,
+            body
+        );
+        res.send({data})
+    } catch (error) {
+        handleHttpError(res, "ERROR_UPDATE_ITEM",)
+    }
+}
 
-const updateItem = (req, res) => {}
 
+const deleteItem = async (req, res) => {
+    try {
+        req = matchedData(req)
+        const {id} = req
 
-const deleteItem = (req, res) => {}
+        const data = await TracksModel.delete({_id: id})
+        res.send({data})
+    } catch (error) {
+        handleHttpError(res, "ERROR_DELETE_ITEM")
+    }
+}
 
 
 
